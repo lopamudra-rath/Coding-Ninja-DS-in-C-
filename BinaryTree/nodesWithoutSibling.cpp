@@ -17,6 +17,13 @@ void nodesWithoutSiblings(BinaryTreeNode<int>* root){
     }
     
     if(root->right == NULL && root->left != NULL){
-        cout<<
+        cout<<root->left->data;
     }
+    if(root->right != NULL && root->left == NULL){
+        cout<<root->left->data;
+    }
+    
+    nodesWithoutSiblings(root->right);
+     nodesWithoutSiblings(root->left);
+    
 }
