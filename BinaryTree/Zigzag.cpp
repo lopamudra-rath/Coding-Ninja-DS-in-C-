@@ -19,7 +19,7 @@
 // 2 3
 // 9
 
-#include <stack>
+/*#include <stack>
 
 void zigzag(BinaryNodeTree<int>* root){
     stack<BinaryNodeTree<int>> s1;
@@ -53,4 +53,78 @@ void zigzag(BinaryNodeTree<int>* root){
         cout<<endl;
         s2.push(root);
     }
+}*/
+int count(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        return 0;
+    }
+    return 1+ count(root->left)+ count(root->right);
+}
+
+void zigZag(BinaryTreeNode<int>* root, int n){
+    BinaryTreeNode<int> * queue[2 * n];
+    int top = -1;
+    int front = 1;
+    queue[++top] = NULL;
+    queue[++top] = root;
+    queue[++top] = NULL;
+ 
+    // struct Node* t=root;
+    int prevFront = 0, count = 1;
+    while (1) {
+ 
+        BinaryTreeNode<int> * curr = queue[front];
+ 
+        // A level separator found
+        if (curr == NULL) {
+ 
+            // If this is the only item in dequeue
+            if (front == top)
+                break;
+ 
+            // Else print contents of previous level
+            // according to count
+            else {
+                if (count % 2 == 0) {
+                    for (int i = front - 1; i > prevFront; i--)
+                        printf("%d ", queue[i]->data);
+                }
+                else {
+                    
+                    for (int i = prevFront + 1; i < front; i++)
+                        printf("%d ", queue[i]->data);
+                }
+                cout<<endl;
+ 
+                prevFront = front;
+                count++;
+                front++;
+ 
+                // Insert a new level separator
+                queue[++top] = NULL;
+ 
+                continue;
+            }
+        }
+ 
+        if (curr->left != NULL)
+            queue[++top] = curr->left;
+        if (curr->right != NULL)
+            queue[++top] = curr->right;
+        front++;
+    }
+ 
+    if (count % 2 == 0) {
+       for (int i = top - 1; i > prevFront; i--)
+            printf("%d ", queue[i]->data);
+    }
+    else {
+        
+         for (int i = prevFront + 1; i < top; i++)
+            printf("%d ", queue[i]->data);
+    }
+}
+void zigZagOrder(BinaryTreeNode<int> *root) {
+    int n = count(root);
+    zigZag(root, n);
 }
