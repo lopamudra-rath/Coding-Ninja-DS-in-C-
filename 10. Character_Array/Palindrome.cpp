@@ -21,7 +21,6 @@ bool checkPalindrome(char str[]){
     }
   	 
     return false;
-   
 }
 
 
